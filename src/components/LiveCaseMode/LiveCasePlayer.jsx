@@ -390,6 +390,11 @@ export const LiveCasePlayer = ({ caseFile, onBack, onOpenMapWithCategory }) => {
           50% { transform: scale(1.05); opacity: 0.4; }
           100% { transform: scale(0.95); opacity: 0.8; }
         }
+        @media (max-width: 860px) {
+          .live-case-hud-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
       `}</style>
 
       {/* Top Bar: Case Header & Exit */}
@@ -673,7 +678,7 @@ export const LiveCasePlayer = ({ caseFile, onBack, onOpenMapWithCategory }) => {
       {/* 2. ACTIVE IN-CALL HUD */}
       {/* ──────────────────────────────────────────────────────────── */}
       {callState === 'active' && (
-        <div style={{
+        <div className="live-case-hud-grid" style={{
           flex: 1,
           display: 'grid',
           gridTemplateColumns: 'minmax(0, 1fr) 340px',

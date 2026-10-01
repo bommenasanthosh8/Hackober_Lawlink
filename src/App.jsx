@@ -157,7 +157,7 @@ function MainApp() {
 
   return (
     <div className="app-container">
-      {/* Top Sticky Navigation */}
+      {/* Vertical Left Sidebar / Mobile Header */}
       <Navbar
         currentView={currentView}
         setView={setView}
@@ -166,8 +166,10 @@ function MainApp() {
         onGlobalSearch={handleGlobalSearch}
       />
 
-      {/* Main Content Router */}
-      <main className="main-content">
+      {/* Main Body Area */}
+      <div className="app-body-wrapper" style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+        {/* Main Content Router */}
+        <main className="main-content">
         {currentView === 'dashboard' && (
           <Dashboard
             onSelectTopic={handleSelectTopic}
@@ -461,6 +463,7 @@ function MainApp() {
           {t('educationalDisclaimer')}
         </div>
       </footer>
+      </div>
 
       <style>{`
         @media (min-width: 900px) {
