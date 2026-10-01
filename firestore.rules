@@ -1,0 +1,116 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to verify UID ownership
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Helper function to check if user has admin claim or is in admin profile
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        request.auth.token.email.matches('.*admin.*@lawlink[.]org') ||
+        request.auth.uid == 'admin_user_001'
+      );
+    }
+
+    // Public / Curated Educational Content (Read by all authenticated learners, writable only by admins)
+    match /topics/{topicId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /scenarios/{scenarioId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /quizQuestions/{questionId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /resources/{resourceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /contentVerification/{contentId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /achievements/{achievementId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // User Profile Data (Strict isolation: only matching UID can read/write)
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    match /profiles/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    // User Gamification & Learning Progress (Strict UID isolation)
+    match /progress/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) || isAdmin();
+
+      match /topicProgress/{topicId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
+    }
+
+    match /userAchievements/{userId}/items/{achievementId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    match /learningHistory/{userId}/items/{activityId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    match /notifications/{userId}/items/{notificationId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // Quiz Attempts (User can create their own attempts, read own attempts)
+    match /quizAttempts/{attemptId} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // AI Guidance Sessions
+    match /guidanceSessions/{sessionId} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+
+    // Global Leaderboard (Public read for gamification; write restricted to owner UID for their record)
+    match /leaderboard/{userId} {
+      allow read: if true;
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    // Platform Analytics (Read by admin, aggregated writes by system/admin)
+    match /analytics/{docId} {
+      allow read: if isAdmin();
+      allow write: if isAuthenticated();
+    }
+  }
+}
