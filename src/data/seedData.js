@@ -3184,6 +3184,36 @@ export const BADGES = [
     streakRequirement: 3
   },
   {
+    id: 'scam_slayer',
+    name: 'Scam Slayer',
+    nameHi: 'स्कैम संहारक',
+    nameTe: 'స్కామ్ స్లేయర్',
+    icon: 'ShieldCheck',
+    color: '#ef4444',
+    description: 'Thwarted an aggressive voice phishing scammer in real time without leaking credentials.',
+    liveCaseRequirement: 'case_fake_bank_call'
+  },
+  {
+    id: 'cool_under_pressure',
+    name: 'Cool Under Pressure',
+    nameHi: 'दबाव में शांत',
+    nameTe: 'ఒత్తిడిలో ప్రశాంతత',
+    icon: 'Scale',
+    color: '#06b6d4',
+    description: 'Stood firm against intimidating checkpost pressure and asserted DigiLocker rights.',
+    liveCaseRequirement: 'case_checkpost_pressure'
+  },
+  {
+    id: 'rights_ranger',
+    name: 'Rights Ranger',
+    nameHi: 'अधिकार रेंजर',
+    nameTe: 'హక్కుల రేంజర్',
+    icon: 'Flame',
+    color: '#8b5cf6',
+    description: 'Mastered 3+ Live Voice Cases with 3-star composure and accurate statutory counters.',
+    liveCaseCountRequirement: 3
+  },
+  {
     id: 'lawlink_pioneer',
     name: 'LawLink Champion',
     nameHi: 'लॉलिंक चैंपियन',

@@ -167,6 +167,7 @@ export const getUserProgress = async (uid) => {
     completedTopics: [],
     completedScenarios: [],
     completedQuizzes: [],
+    completedLiveCases: [],
     quizAccuracy: 0,
     dailyChallengeDate: null
   };
@@ -261,6 +262,13 @@ export const awardUserXp = async (uid, xpAmount, reason = '', metadata = {}) => 
     updatedProgress.completedQuizzes = [...updatedProgress.completedQuizzes, metadata.quizId];
   }
 
+  if (metadata.liveCaseId) {
+    const liveList = updatedProgress.completedLiveCases || [];
+    if (!liveList.includes(metadata.liveCaseId)) {
+      updatedProgress.completedLiveCases = [...liveList, metadata.liveCaseId];
+    }
+  }
+
   if (metadata.isDailyChallenge) {
     updatedProgress.dailyChallengeDate = today;
   }
@@ -352,6 +360,10 @@ export const evaluateBadgeUnlocks = async (uid, progress) => {
     } else if (badge.streakRequirement && (progress.streak || 0) >= badge.streakRequirement) {
       shouldUnlock = true;
     } else if (badge.levelRequirement && (progress.level || 0) >= badge.levelRequirement) {
+      shouldUnlock = true;
+    } else if (badge.liveCaseRequirement && (progress.completedLiveCases || []).includes(badge.liveCaseRequirement)) {
+      shouldUnlock = true;
+    } else if (badge.liveCaseCountRequirement && (progress.completedLiveCases?.length || 0) >= badge.liveCaseCountRequirement) {
       shouldUnlock = true;
     }
 

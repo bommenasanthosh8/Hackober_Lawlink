@@ -197,6 +197,38 @@ export const Navbar = ({ currentView, setView, onOpenDemoModal, onOpenAuthModal,
           </button>
 
           <button 
+            onClick={() => handleNavClick('live_cases')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.45rem 0.85rem',
+              borderRadius: 'var(--radius-md)',
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: currentView === 'live_cases' || currentView === 'live_case_player' ? '#e11d48' : '#475569',
+              background: currentView === 'live_cases' || currentView === 'live_case_player' ? 'rgba(244, 63, 94, 0.12)' : 'transparent',
+              border: currentView === 'live_cases' || currentView === 'live_case_player' ? '1px solid rgba(244, 63, 94, 0.35)' : '1px solid transparent',
+              transition: 'all var(--transition-fast)'
+            }}
+          >
+            <PhoneCall size={17} color={currentView === 'live_cases' || currentView === 'live_case_player' ? '#e11d48' : '#64748b'} />
+            <span>{t('navLiveCases')}</span>
+            <span style={{
+              fontSize: '0.6rem',
+              fontWeight: 900,
+              background: 'linear-gradient(135deg, #ef4444, #f43f5e)',
+              color: '#ffffff',
+              padding: '0.1rem 0.4rem',
+              borderRadius: '999px',
+              letterSpacing: '0.05em',
+              boxShadow: '0 0 10px rgba(244, 63, 94, 0.4)'
+            }}>
+              LIVE
+            </span>
+          </button>
+
+          <button 
             onClick={() => handleNavClick('maps')}
             style={{
               display: 'flex',
@@ -723,6 +755,23 @@ export const Navbar = ({ currentView, setView, onOpenDemoModal, onOpenAuthModal,
           >
             <BookOpen size={18} color="#4f46e5" />
             {t('navTopics')}
+          </button>
+          <button 
+            onClick={() => handleNavClick('live_cases')}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.6rem', color: '#e11d48', fontSize: '0.95rem', fontWeight: 700 }}
+          >
+            <PhoneCall size={18} color="#e11d48" />
+            <span>{t('navLiveCases')}</span>
+            <span style={{
+              fontSize: '0.6rem',
+              fontWeight: 900,
+              background: '#ef4444',
+              color: '#ffffff',
+              padding: '0.1rem 0.35rem',
+              borderRadius: '999px'
+            }}>
+              VOICE
+            </span>
           </button>
           <button 
             onClick={() => handleNavClick('maps')}

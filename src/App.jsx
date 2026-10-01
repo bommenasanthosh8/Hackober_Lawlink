@@ -21,8 +21,10 @@ import { AuthModal } from './components/AuthModal';
 import { CitizenLegalHUD } from './components/CitizenLegalHUD';
 import { LoginPage } from './components/LoginPage';
 import { FloatingChatBot } from './components/FloatingChatBot';
+import { LiveCaseSelectView, LiveCasePlayer } from './components/LiveCaseMode';
 
 import { TOPICS, SCENARIOS, QUIZ_QUESTIONS } from './data/seedData';
+import { LIVE_CASES } from './data/liveCasesData';
 import { 
   Compass, 
   BookOpen, 
@@ -32,7 +34,8 @@ import {
   Award, 
   X, 
   Sparkles,
-  Scale
+  Scale,
+  PhoneCall
 } from 'lucide-react';
 
 function MainApp() {
@@ -50,6 +53,7 @@ function MainApp() {
     questions: QUIZ_QUESTIONS.filter(q => q.topicId === 'cybercrime')
   });
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeLiveCase, setActiveLiveCase] = useState(LIVE_CASES[0] || null);
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState('credentials');
@@ -137,6 +141,13 @@ function MainApp() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Live Case Selection Handler
+  const handleSelectLiveCase = (caseFile) => {
+    setActiveLiveCase(caseFile);
+    setView('live_case_player');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Global Search Handler
   const handleGlobalSearch = (query) => {
     setSearchQuery(query);
@@ -206,6 +217,30 @@ function MainApp() {
             topicTitle={activeQuizData.topicTitle}
             questions={activeQuizData.questions}
             onBackToTopic={() => setView('topic_detail')}
+          />
+        )}
+
+        {currentView === 'live_cases' && (
+          <LiveCaseSelectView
+            onSelectCase={handleSelectLiveCase}
+            onOpenGuide={() => {
+              setView('ai');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {currentView === 'live_case_player' && (
+          <LiveCasePlayer
+            caseFile={activeLiveCase || LIVE_CASES[0]}
+            onBack={() => {
+              setView('live_cases');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenMapWithCategory={(category) => {
+              setView('maps');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           />
         )}
 
@@ -348,6 +383,14 @@ function MainApp() {
         >
           <BookOpen size={20} />
           <span>Topics</span>
+        </button>
+
+        <button
+          onClick={() => { setView('live_cases'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', color: currentView === 'live_cases' || currentView === 'live_case_player' ? '#e11d48' : 'var(--text-muted)', fontSize: '0.7rem', position: 'relative' }}
+        >
+          <PhoneCall size={20} />
+          <span>Live Cases</span>
         </button>
 
         <button

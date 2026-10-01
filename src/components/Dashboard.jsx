@@ -327,6 +327,111 @@ export const Dashboard = ({ onSelectTopic, onSelectScenario, onNavigate }) => {
         </div>
       </div>
 
+      {/* FLAGSHIP JUDGE SPOTLIGHT: LIVE CASE MODE (Voice Simulation) */}
+      <div className="glass-panel" style={{
+        padding: '1.75rem',
+        background: 'linear-gradient(135deg, rgba(225, 29, 72, 0.08) 0%, rgba(99, 102, 241, 0.08) 50%, rgba(6, 182, 212, 0.08) 100%)',
+        border: '1.5px solid rgba(225, 29, 72, 0.35)',
+        boxShadow: '0 8px 30px rgba(225, 29, 72, 0.15)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: '-30px',
+          right: '-30px',
+          width: '180px',
+          height: '180px',
+          background: 'radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 70%)',
+          pointerEvents: 'none'
+        }} />
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', position: 'relative', zIndex: 1 }}>
+          <div style={{ maxWidth: '680px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.6rem', flexWrap: 'wrap' }}>
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                fontSize: '0.7rem',
+                fontWeight: 900,
+                color: '#ffffff',
+                background: 'linear-gradient(135deg, #ef4444, #f43f5e)',
+                padding: '0.2rem 0.6rem',
+                borderRadius: '999px',
+                letterSpacing: '0.05em',
+                boxShadow: '0 0 12px rgba(239, 68, 68, 0.5)'
+              }}>
+                <PhoneCall size={12} />
+                FLAGSHIP DEMO
+              </span>
+              <span style={{
+                fontSize: '0.72rem',
+                color: '#f43f5e',
+                fontWeight: 700,
+                background: 'rgba(244, 63, 94, 0.12)',
+                border: '1px solid rgba(244, 63, 94, 0.3)',
+                padding: '0.15rem 0.5rem',
+                borderRadius: '6px'
+              }}>
+                Powered by Gemini Live API (16kHz PCM duplex)
+              </span>
+              <span style={{
+                fontSize: '0.72rem',
+                color: '#10b981',
+                fontWeight: 700,
+                background: 'rgba(16, 185, 129, 0.12)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                padding: '0.15rem 0.5rem',
+                borderRadius: '6px'
+              }}>
+                BNS 2024 Grounded
+              </span>
+            </div>
+
+            <h2 style={{ fontSize: '1.55rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>
+              Live Case Mode: High-Stakes Voice Legal Simulation
+            </h2>
+            <p style={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.55, margin: 0 }}>
+              Face aggressive scam callers, deceptive customer support agents, and intimidating officials in real-time spoken audio. 
+              Hold your composure, cite statutory protections (BNS Sec 318, RBI Circulars, CPA 2019), and earn the exclusive <strong>Scam Slayer</strong> badge.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', minWidth: '220px' }}>
+            <button
+              onClick={() => {
+                sounds.playClick();
+                onNavigate('live_cases');
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                padding: '0.85rem 1.4rem',
+                background: 'linear-gradient(135deg, #e11d48 0%, #be123c 100%)',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: 'var(--radius-md)',
+                fontSize: '0.95rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                boxShadow: '0 4px 18px rgba(225, 29, 72, 0.4)',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <PhoneCall size={18} />
+              <span>Launch Voice Demo</span>
+              <ChevronRight size={18} />
+            </button>
+            <div style={{ textAlign: 'center', fontSize: '0.72rem', color: '#64748b' }}>
+              Zero-dead-screen fallback guaranteed
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Gamification Stats Row with 7-Day Flame Streak Calendar */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
         

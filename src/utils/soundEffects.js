@@ -147,6 +147,107 @@ class SoundManager {
   playBadge() {
     this.playFanfare();
   }
+
+  playPhoneRing() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      [0, 0.4].forEach(offset => {
+        const osc1 = this.ctx.createOscillator();
+        const osc2 = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc1.type = 'sine';
+        osc2.type = 'sine';
+        osc1.frequency.setValueAtTime(400, now + offset);
+        osc2.frequency.setValueAtTime(450, now + offset);
+        gain.gain.setValueAtTime(0.05, now + offset);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.35);
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc1.start(now + offset);
+        osc2.start(now + offset);
+        osc1.stop(now + offset + 0.35);
+        osc2.stop(now + offset + 0.35);
+      });
+    } catch (e) {}
+  }
+
+  playEvidenceTick() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const freqs = [880, 1320, 1760]; // Sparkling arpeggio A5, E6, A6
+      freqs.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+        gain.gain.setValueAtTime(0.05, now + idx * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.04 + 0.2);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + idx * 0.04);
+        osc.stop(now + idx * 0.04 + 0.2);
+      });
+    } catch (e) {}
+  }
+
+  playTrapBuzzer() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.setValueAtTime(120, now + 0.1);
+      gain.gain.setValueAtTime(0.07, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.3);
+    } catch (e) {}
+  }
+
+  playTensionDrone() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx || this.droneGain) return;
+      const osc = this.ctx.createOscillator();
+      this.droneGain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(55, this.ctx.currentTime); // Low A1 sub-bass rumble
+      this.droneGain.gain.setValueAtTime(0.015, this.ctx.currentTime);
+      osc.connect(this.droneGain);
+      this.droneGain.connect(this.ctx.destination);
+      osc.start();
+      this.droneOsc = osc;
+    } catch (e) {}
+  }
+
+  stopTensionDrone() {
+    try {
+      if (this.droneGain && this.ctx) {
+        this.droneGain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5);
+        setTimeout(() => {
+          if (this.droneOsc) {
+            try { this.droneOsc.stop(); } catch(err) {}
+            this.droneOsc = null;
+          }
+          this.droneGain = null;
+        }, 550);
+      }
+    } catch (e) {}
+  }
 }
 
 export const sounds = new SoundManager();
