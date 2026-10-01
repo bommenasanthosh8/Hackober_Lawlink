@@ -171,7 +171,7 @@ export const FindHelpNearMe = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
-            <AlertCircle size={16} flexShrink={0} />
+            <AlertCircle size={16} style={{ flexShrink: 0 }} />
             <span>Location access was denied. Currently showing resources relative to: <strong>GRIET Hyderabad (Bachupally)</strong>. You can search any locality below.</span>
           </div>
         )}
@@ -235,7 +235,7 @@ export const FindHelpNearMe = () => {
                     onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(99, 102, 241, 0.12)'}
                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                   >
-                    <MapPin size={16} color="var(--primary-light)" flexShrink={0} />
+                    <MapPin size={16} color="var(--primary-light)" style={{ flexShrink: 0 }} />
                     <div>
                       <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>{p.mainText}</div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{p.description}</div>

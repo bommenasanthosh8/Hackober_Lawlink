@@ -195,7 +195,7 @@ Generated via LAWLINK — Gamified Legal Literacy Platform`;
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          <AlertCircle size={16} flexShrink={0} />
+          <AlertCircle size={16} style={{ flexShrink: 0 }} />
           <span>
             <strong>Legal Safety Notice:</strong> {t('educationalDisclaimer')}
           </span>

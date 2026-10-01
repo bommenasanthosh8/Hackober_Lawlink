@@ -136,7 +136,7 @@ export const GlobalSearchView = ({ query, onSelectTopic, onSelectScenario }) => 
                       </p>
                     </div>
 
-                    <ArrowRight size={16} color="var(--primary-light)" flexShrink={0} />
+                    <ArrowRight size={16} color="var(--primary-light)" style={{ flexShrink: 0 }} />
                   </div>
                 ))}
               </div>

@@ -611,7 +611,7 @@ export const Dashboard = ({ onSelectTopic, onSelectScenario, onNavigate }) => {
                     </div>
                   </div>
 
-                  <ArrowRight size={18} color="var(--primary-light)" flexShrink={0} />
+                  <ArrowRight size={18} color="var(--primary-light)" style={{ flexShrink: 0 }} />
                 </div>
               ))}
             </div>

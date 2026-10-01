@@ -250,7 +250,7 @@ export const AuthModal = ({ isOpen, onClose, initialTab = 'credentials' }) => {
             alignItems: 'center',
             gap: '0.4rem'
           }}>
-            <AlertCircle size={15} flexShrink={0} />
+            <AlertCircle size={15} style={{ flexShrink: 0 }} />
             <span>{localErr || authError}</span>
           </div>
         )}
